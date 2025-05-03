@@ -1,0 +1,80 @@
+// LCD module connections
+sbit LCD_RS at RB2_bit;
+sbit LCD_EN at RB3_bit;
+sbit LCD_D4 at RB4_bit;
+sbit LCD_D5 at RB5_bit;
+sbit LCD_D6 at RB6_bit;
+sbit LCD_D7 at RB7_bit;
+
+sbit LCD_RS_Direction at TRISB2_bit;
+sbit LCD_EN_Direction at TRISB3_bit;
+sbit LCD_D4_Direction at TRISB4_bit;
+sbit LCD_D5_Direction at TRISB5_bit;
+sbit LCD_D6_Direction at TRISB6_bit;
+sbit LCD_D7_Direction at TRISB7_bit;
+// End LCD module connections
+
+char *freq = " 00";
+
+void Display_Freq(unsigned int freq2write)
+{
+    freq[1] = (freq2write / 10) + 48;    // Extract tens digit
+    freq[2] = (freq2write % 10) + 48;    // Extract ones digit
+
+    Lcd_Out(2, 11, freq);
+    Lcd_Out(2, 14, "Hz");
+
+    if(freq2write == 50)
+    {
+        PORTA.F0 = 1;
+        PORTA.F1 = 0;
+        PORTA.F2 = 0;
+    }
+    else if(freq2write > 50)
+    {
+        PORTA.F0 = 0;
+        PORTA.F1 = 1;
+        PORTA.F2 = 0;
+    }
+    else
+    {
+        PORTA.F0 = 0;
+        PORTA.F1 = 0;
+        PORTA.F2 = 1;
+    }
+}
+
+void main()
+{
+    ADCON1 = 0x06;       // Set PORTA as digital
+    TRISA.F0 = 0;        // Output
+    TRISA.F1 = 0;
+    TRISA.F2 = 0;
+    TRISA.F4 = 1;        // RA4/T0CKI as input
+    PORTA = 0;
+
+    TRISB = 0x00;        // Set PORTB as output (LCD)
+
+    // Timer0 setup: 8-bit, counter mode, increment on rising edge
+    T0CON = 0b00100000;  // TMR0ON=0, 8-bit mode, T0CS=1 (counter mode), T0SE=0 (rising edge), PSA=0, 1:2 prescaler
+    TMR0L = 0;           // Clear timer
+    T0CON.TMR0ON = 1;    // Turn on Timer0
+
+    Lcd_Init();
+    Lcd_Cmd(_LCD_CLEAR);
+    Lcd_Cmd(_LCD_CURSOR_OFF);
+
+    Lcd_Out(1, 1, "FrequencyMonitor");
+
+    while(1)
+    {
+        TMR0L = 0;               // Reset Timer0
+        Delay_ms(1000);          // 1 second window
+        Lcd_Out(2, 1, "FREQUENCY:");
+
+        T0CON.TMR0ON = 0;        // Stop Timer0 to read safely
+        Display_Freq(TMR0L / 2); // Convert count to frequency (divide by 2)
+        TMR0L = 0;
+        T0CON.TMR0ON = 1;        // Restart Timer0
+    }
+}
