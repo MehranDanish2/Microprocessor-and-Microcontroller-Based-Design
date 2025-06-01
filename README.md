@@ -56,7 +56,7 @@ Currently, this project relies on Timer0 and internal ADC of the PIC18F452 micro
 ## Usage/Examples
 
 will be updated in the future!
-![Demo GIF](output.gif)
-<br>(Microsoft Visual Studio)
+![Demo GIF](extraz/output.gif)
+<br>(Proteus 8 Professional)
 
 
