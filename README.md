@@ -18,6 +18,19 @@ This project implements a Frequency and Amplitude Measurement Device using the P
 ## Authors
 - [@MehranDanish2](https://github.com/MehranDanish2/MehranDanish2.git)
 - [@usmanawan50](https://github.com/usmanawan50/usmanawan50.git)
+
+## Deployment
+
+# Software 
+1. Download schematic and source.hex.<br>
+2. Open schematic and double click pic18f452 IC to load hex file.<br>
+![Demo GIF](extraz/select.gif)
+<br>(Proteus 8 Professional)
+3. Done! just click on run now. Edit the project by modifying source.c and compiling the code with MikroC for PIC software.
+
+# Hardware
+1. Make hardware circuit using the given schematic.<br>
+2. Load hex file using a programmer kit such as pickit 3.0.
   
 ## 📌 Features
 1. Measures frequency of digital signals upto 100Hz and 325Vrms.<br>
