@@ -1,0 +1,1 @@
+code compiled using MikroC compiler for pic18f452 with 8 MHz internal clock.
