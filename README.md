@@ -16,7 +16,7 @@ This project implements a Frequency and Amplitude Measurement Device using the P
  - [Microcontroller Lab's Website](https://microcontrollerslab.com/)
 
 ## Authors
-- [@MehranDanish2](https://github.com/MehranDanish2/MehranDanish2.git)
+- [@MehranDanish2](https://github.com/MehranDanish2.git)
 - [@usmanawan50](https://github.com/usmanawan50/usmanawan50.git)
 
 ## Deployment
